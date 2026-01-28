@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import { JetBrains_Mono } from 'next/font/google'
 import './globals.css'
+import { MatrixRain } from '@/components/matrix-rain'
 
 const jetbrainsMono = JetBrains_Mono({
   subsets: ['latin'],
@@ -48,10 +49,15 @@ export default function RootLayout({
   return (
     <html lang="en" className="dark scroll-smooth">
       <body className={`${jetbrainsMono.variable} antialiased`}>
+        {/* Matrix rain background */}
+        <MatrixRain />
+
         {/* Scan lines overlay */}
         <div className="scan-lines" aria-hidden="true" />
 
-        {children}
+        <div className="relative z-10">
+          {children}
+        </div>
       </body>
     </html>
   )
