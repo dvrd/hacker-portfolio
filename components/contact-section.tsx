@@ -21,67 +21,63 @@ export function ContactSection() {
   }
 
   return (
-    <section id="contact" className="py-24 md:py-32 bg-black">
-      <div className="container mx-auto px-4 md:px-6 lg:px-8 max-w-7xl">
-        <FadeIn>
-          <div className="max-w-3xl mb-16 md:mb-20">
-            <GlitchText
-              text="// CONTACT"
-              as="h2"
-              className="text-3xl md:text-5xl font-bold mb-4 text-green-400"
+    <section id="contact" className="py-24 md:py-32">
+      <FadeIn>
+        <div className="mb-16 md:mb-20">
+          <GlitchText
+            text="// CONTACT"
+            as="h2"
+            className="text-3xl md:text-5xl font-bold mb-4"
+          />
+          <p className="text-muted-foreground text-lg md:text-xl font-mono">
+            Let's build something together
+          </p>
+        </div>
+      </FadeIn>
+
+      <FadeIn delay={200}>
+        <Card>
+          <CardHeader>
+            <CardTitle className="flex items-center gap-2 text-xl md:text-2xl">
+              <span className="text-primary">&gt;</span>
+              Get In Touch
+            </CardTitle>
+            <CardDescription className="text-base">
+              Click any field to copy to clipboard
+            </CardDescription>
+          </CardHeader>
+          <CardContent className="space-y-5">
+            <ContactItem
+              label="EMAIL"
+              value={profile.contact.email}
+              copied={copiedField === 'email'}
+              onCopy={() => copyToClipboard(profile.contact.email, 'email')}
             />
-            <p className="text-green-500/70 text-lg md:text-xl font-mono">
-              Let's build something together
-            </p>
-          </div>
-        </FadeIn>
 
-        <FadeIn delay={200}>
-          <div className="max-w-3xl mx-auto">
-            <Card>
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2 text-xl md:text-2xl">
-                  <span className="text-green-500">&gt;</span>
-                  Get In Touch
-                </CardTitle>
-                <CardDescription className="text-base">
-                  Click any field to copy to clipboard
-                </CardDescription>
-              </CardHeader>
-              <CardContent className="space-y-5">
-                <ContactItem
-                  label="EMAIL"
-                  value={profile.contact.email}
-                  copied={copiedField === 'email'}
-                  onCopy={() => copyToClipboard(profile.contact.email, 'email')}
-                />
+            <ContactItem
+              label="PHONE"
+              value={profile.contact.phone}
+              copied={copiedField === 'phone'}
+              onCopy={() => copyToClipboard(profile.contact.phone, 'phone')}
+            />
 
-                <ContactItem
-                  label="PHONE"
-                  value={profile.contact.phone}
-                  copied={copiedField === 'phone'}
-                  onCopy={() => copyToClipboard(profile.contact.phone, 'phone')}
-                />
+            <ContactItem
+              label="LOCATION"
+              value={profile.contact.location}
+              copied={copiedField === 'location'}
+              onCopy={() => copyToClipboard(profile.contact.location, 'location')}
+            />
 
-                <ContactItem
-                  label="LOCATION"
-                  value={profile.contact.location}
-                  copied={copiedField === 'location'}
-                  onCopy={() => copyToClipboard(profile.contact.location, 'location')}
-                />
-
-                <ContactItem
-                  label="GITHUB"
-                  value={profile.contact.github}
-                  copied={copiedField === 'github'}
-                  onCopy={() => copyToClipboard(profile.contact.github, 'github')}
-                  href={`https://${profile.contact.github}`}
-                />
-              </CardContent>
-            </Card>
-          </div>
-        </FadeIn>
-      </div>
+            <ContactItem
+              label="GITHUB"
+              value={profile.contact.github}
+              copied={copiedField === 'github'}
+              onCopy={() => copyToClipboard(profile.contact.github, 'github')}
+              href={`https://${profile.contact.github}`}
+            />
+          </CardContent>
+        </Card>
+      </FadeIn>
     </section>
   )
 }
