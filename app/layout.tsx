@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import { JetBrains_Mono } from 'next/font/google'
 import './globals.css'
 import { MatrixRain } from '@/components/matrix-rain'
+import { Navigation } from '@/components/navigation'
 
 const jetbrainsMono = JetBrains_Mono({
   subsets: ['latin'],
@@ -56,6 +57,7 @@ export default function RootLayout({
         <div className="scan-lines" aria-hidden="true" />
 
         <div className="relative z-10">
+          <Navigation />
           {children}
         </div>
       </body>
