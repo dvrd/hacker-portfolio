@@ -96,20 +96,20 @@ interface ContactItemProps {
 
 function ContactItem({ label, value, copied, onCopy, href }: ContactItemProps) {
   return (
-    <div className="flex items-center justify-between gap-4 p-4 md:p-5 rounded-lg border border-green-500/20 hover:border-green-500/40 transition-all hover:shadow-lg hover:shadow-green-500/10">
+    <div className="flex items-center justify-between gap-4 p-4 md:p-5 rounded-lg border hover:border-primary/50 transition-all hover:shadow-lg hover:shadow-primary/5 hover:bg-accent/50">
       <div className="flex items-center gap-4 flex-1 min-w-0">
-        <span className="text-green-400 font-mono text-sm md:text-base shrink-0 font-semibold">{label}:</span>
+        <span className="text-sm md:text-base shrink-0 font-semibold">{label}:</span>
         {href ? (
           <a
             href={href}
             target="_blank"
             rel="noopener noreferrer"
-            className="text-green-500 hover:text-green-400 transition-colors font-mono text-sm md:text-base truncate"
+            className="text-primary hover:underline transition-colors text-sm md:text-base truncate"
           >
             {value}
           </a>
         ) : (
-          <span className="text-green-500 font-mono text-sm md:text-base truncate">{value}</span>
+          <span className="text-sm md:text-base truncate">{value}</span>
         )}
       </div>
       <Button

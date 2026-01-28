@@ -30,13 +30,13 @@ export function WorkHistorySection() {
 
         <div className="max-w-5xl mx-auto">
           <FadeIn delay={100}>
-            <Accordion type="multiple" className="space-y-6">
+            <Accordion type="multiple" className="space-y-0">
               {workHistory.map((job, idx) => (
                 <AccordionItem key={`${job.company}-${idx}`} value={`job-${idx}`}>
                   <AccordionTrigger>
-                    <div className="flex-1 text-left">
+                    <div className="flex-1 text-left pr-4">
                       <div className="flex flex-wrap items-center gap-3 mb-2">
-                        <h3 className="text-green-400 font-bold text-lg md:text-xl">
+                        <h3 className="font-bold text-lg md:text-xl">
                           {job.position}
                         </h3>
                         {job.current && (
@@ -45,10 +45,10 @@ export function WorkHistorySection() {
                           </Badge>
                         )}
                       </div>
-                      <div className="text-green-500 text-sm md:text-base">
-                        <span className="text-green-400 font-semibold">{job.company}</span>
-                        <span className="text-green-500/50"> • </span>
-                        <span className="text-green-500/70">{job.period}</span>
+                      <div className="text-sm md:text-base text-muted-foreground">
+                        <span className="font-semibold">{job.company}</span>
+                        <span className="text-muted-foreground/50"> • </span>
+                        <span>{job.period}</span>
                       </div>
                     </div>
                   </AccordionTrigger>
@@ -57,10 +57,10 @@ export function WorkHistorySection() {
                       {job.highlights.map((highlight, hIdx) => (
                         <li
                           key={hIdx}
-                          className="text-green-500/80 text-sm md:text-base font-mono flex items-start gap-3"
+                          className="text-sm md:text-base flex items-start gap-3 leading-relaxed"
                         >
-                          <span className="text-green-400 shrink-0 mt-1">›</span>
-                          <span className="leading-relaxed">{highlight}</span>
+                          <span className="text-primary shrink-0 mt-1 font-bold">›</span>
+                          <span>{highlight}</span>
                         </li>
                       ))}
                     </ul>

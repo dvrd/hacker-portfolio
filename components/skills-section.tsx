@@ -28,10 +28,10 @@ export function SkillsSection() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
           {skills.map((category, idx) => (
             <FadeIn key={category.category} delay={idx * 100}>
-              <Card className="h-full">
+              <Card className="h-full hover:shadow-xl hover:shadow-primary/5 transition-shadow">
                 <CardHeader>
                   <CardTitle className="text-xl flex items-center gap-2">
-                    <span className="text-green-500">&gt;</span>
+                    <span className="text-primary">&gt;</span>
                     {category.category}
                   </CardTitle>
                 </CardHeader>
@@ -70,13 +70,13 @@ function SkillBar({ skill }: SkillBarProps) {
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-2">
           <span className="text-sm">{skill.icon}</span>
-          <span className="text-sm font-mono text-green-500">{skill.name}</span>
+          <span className="text-sm font-semibold">{skill.name}</span>
         </div>
-        <Badge variant="outline" className="text-xs px-2 py-0.5">
+        <Badge variant="outline" className="text-xs">
           {skill.level}%
         </Badge>
       </div>
-      <Progress value={value} className="h-2" />
+      <Progress value={value} className="h-2.5" />
     </div>
   )
 }
