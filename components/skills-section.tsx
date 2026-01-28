@@ -3,6 +3,9 @@
 import { skills } from '@/lib/data'
 import { FadeIn } from './fade-in'
 import { GlitchText } from './glitch-text'
+import { Card, CardContent, CardHeader, CardTitle } from './ui/card'
+import { Progress } from './ui/progress'
+import { Badge } from './ui/badge'
 import { useState, useEffect } from 'react'
 
 export function SkillsSection() {
@@ -17,19 +20,22 @@ export function SkillsSection() {
           />
         </FadeIn>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {skills.map((category, idx) => (
             <FadeIn key={category.category} delay={idx * 100}>
-              <div className="border border-green-500/30 p-6 bg-black/50 backdrop-blur">
-                <h3 className="text-green-400 font-mono font-bold mb-4 text-lg">
-                  {category.category}
-                </h3>
-                <div className="space-y-4">
+              <Card>
+                <CardHeader>
+                  <CardTitle className="text-lg flex items-center gap-2">
+                    <span className="text-green-500">&gt;</span>
+                    {category.category}
+                  </CardTitle>
+                </CardHeader>
+                <CardContent className="space-y-4">
                   {category.items.map((skill) => (
                     <SkillBar key={skill.name} skill={skill} />
                   ))}
-                </div>
-              </div>
+                </CardContent>
+              </Card>
             </FadeIn>
           ))}
         </div>
@@ -47,28 +53,25 @@ interface SkillBarProps {
 }
 
 function SkillBar({ skill }: SkillBarProps) {
-  const [width, setWidth] = useState(0)
+  const [value, setValue] = useState(0)
 
   useEffect(() => {
-    const timer = setTimeout(() => setWidth(skill.level), 100)
+    const timer = setTimeout(() => setValue(skill.level), 100)
     return () => clearTimeout(timer)
   }, [skill.level])
 
   return (
-    <div>
-      <div className="flex items-center justify-between mb-2">
-        <span className="text-green-500 text-sm font-mono flex items-center gap-2">
-          <span>{skill.icon}</span>
-          {skill.name}
-        </span>
-        <span className="text-green-400 text-xs font-mono">{skill.level}%</span>
+    <div className="space-y-2">
+      <div className="flex items-center justify-between">
+        <div className="flex items-center gap-2">
+          <span className="text-sm">{skill.icon}</span>
+          <span className="text-sm font-mono text-green-500">{skill.name}</span>
+        </div>
+        <Badge variant="outline" className="text-xs px-2 py-0.5">
+          {skill.level}%
+        </Badge>
       </div>
-      <div className="h-2 bg-green-950 border border-green-500/20">
-        <div
-          className="h-full bg-green-500 transition-all duration-1000 ease-out"
-          style={{ width: `${width}%` }}
-        />
-      </div>
+      <Progress value={value} className="h-2" />
     </div>
   )
 }

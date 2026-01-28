@@ -3,8 +3,13 @@
 import { workHistory } from '@/lib/data'
 import { FadeIn } from './fade-in'
 import { GlitchText } from './glitch-text'
-import { useState } from 'react'
-import { cn } from '@/lib/utils'
+import { Badge } from './ui/badge'
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from './ui/accordion'
 
 export function WorkHistorySection() {
   return (
@@ -18,77 +23,49 @@ export function WorkHistorySection() {
           />
         </FadeIn>
 
-        <div className="max-w-4xl mx-auto space-y-6">
-          {workHistory.map((job, idx) => (
-            <FadeIn key={`${job.company}-${job.position}`} delay={idx * 100}>
-              <WorkHistoryItem job={job} />
-            </FadeIn>
-          ))}
+        <div className="max-w-4xl mx-auto">
+          <FadeIn delay={100}>
+            <Accordion type="multiple" className="space-y-4">
+              {workHistory.map((job, idx) => (
+                <AccordionItem key={`${job.company}-${idx}`} value={`job-${idx}`}>
+                  <AccordionTrigger>
+                    <div className="flex-1 text-left">
+                      <div className="flex items-center gap-3 mb-1">
+                        <h3 className="text-green-400 font-bold text-lg">
+                          {job.position}
+                        </h3>
+                        {job.current && (
+                          <Badge variant="default" className="text-xs px-2 py-0.5 animate-pulse">
+                            CURRENT
+                          </Badge>
+                        )}
+                      </div>
+                      <div className="text-green-500 text-sm">
+                        <span className="text-green-400">{job.company}</span>
+                        <span className="text-green-500/50"> • </span>
+                        <span className="text-green-500/70">{job.period}</span>
+                      </div>
+                    </div>
+                  </AccordionTrigger>
+                  <AccordionContent>
+                    <ul className="space-y-3">
+                      {job.highlights.map((highlight, hIdx) => (
+                        <li
+                          key={hIdx}
+                          className="text-green-500/80 text-sm font-mono flex items-start gap-3"
+                        >
+                          <span className="text-green-400 shrink-0 mt-1">›</span>
+                          <span>{highlight}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </AccordionContent>
+                </AccordionItem>
+              ))}
+            </Accordion>
+          </FadeIn>
         </div>
       </div>
     </section>
-  )
-}
-
-interface WorkHistoryItemProps {
-  job: {
-    company: string
-    position: string
-    period: string
-    current?: boolean
-    highlights: string[]
-  }
-}
-
-function WorkHistoryItem({ job }: WorkHistoryItemProps) {
-  const [isExpanded, setIsExpanded] = useState(false)
-
-  return (
-    <div className="border border-green-500/30 bg-black/50 backdrop-blur">
-      <button
-        onClick={() => setIsExpanded(!isExpanded)}
-        className="w-full p-6 text-left hover:bg-green-500/5 transition-colors"
-      >
-        <div className="flex items-start justify-between gap-4">
-          <div className="flex-1">
-            <h3 className="text-green-400 font-mono font-bold text-lg mb-1">
-              {job.position}
-            </h3>
-            <div className="text-green-500 font-mono text-sm">
-              {job.company} • {job.period}
-              {job.current && (
-                <span className="ml-2 text-green-400 animate-pulse">
-                  [CURRENT]
-                </span>
-              )}
-            </div>
-          </div>
-          <div className="text-green-400 text-xl font-mono">
-            {isExpanded ? '[-]' : '[+]'}
-          </div>
-        </div>
-      </button>
-
-      <div
-        className={cn(
-          'overflow-hidden transition-all duration-300',
-          isExpanded ? 'max-h-[1000px]' : 'max-h-0'
-        )}
-      >
-        <div className="px-6 pb-6 pt-2 border-t border-green-500/20">
-          <ul className="space-y-2">
-            {job.highlights.map((highlight, idx) => (
-              <li
-                key={idx}
-                className="text-green-500/80 text-sm font-mono flex items-start gap-3"
-              >
-                <span className="text-green-400 mt-1">›</span>
-                <span>{highlight}</span>
-              </li>
-            ))}
-          </ul>
-        </div>
-      </div>
-    </div>
   )
 }

@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import { profile } from '@/lib/data'
 import { trackCVDownload } from '@/lib/actions'
+import { Button } from './ui/button'
 
 export function DownloadCVButton() {
   const [downloading, setDownloading] = useState(false)
@@ -33,16 +34,13 @@ export function DownloadCVButton() {
   }
 
   return (
-    <button
+    <Button
       onClick={handleDownload}
       disabled={downloading}
-      className="group relative px-8 py-4 bg-black border-2 border-green-500 text-green-500 font-mono font-bold text-lg hover:bg-green-500 hover:text-black transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
+      size="lg"
+      className="font-bold text-base"
     >
-      <span className="relative z-10">
-        {downloading ? '[DOWNLOADING...]' : '[DOWNLOAD CV]'}
-      </span>
-
-      <div className="absolute inset-0 bg-green-500/20 scale-0 group-hover:scale-100 transition-transform duration-300" />
-    </button>
+      {downloading ? 'DOWNLOADING...' : 'DOWNLOAD CV'}
+    </Button>
   )
 }

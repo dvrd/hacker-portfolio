@@ -3,6 +3,8 @@
 import { profile } from '@/lib/data'
 import { FadeIn } from './fade-in'
 import { GlitchText } from './glitch-text'
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from './ui/card'
+import { Button } from './ui/button'
 import { useState } from 'react'
 
 export function ContactSection() {
@@ -31,8 +33,17 @@ export function ContactSection() {
 
         <FadeIn delay={200}>
           <div className="max-w-2xl mx-auto">
-            <div className="border border-green-500/30 p-8 bg-black/50 backdrop-blur">
-              <div className="space-y-6">
+            <Card>
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                  <span className="text-green-500">&gt;</span>
+                  Get In Touch
+                </CardTitle>
+                <CardDescription>
+                  Click any field to copy to clipboard
+                </CardDescription>
+              </CardHeader>
+              <CardContent className="space-y-4">
                 <ContactItem
                   label="EMAIL"
                   value={profile.contact.email}
@@ -61,14 +72,8 @@ export function ContactSection() {
                   onCopy={() => copyToClipboard(profile.contact.github, 'github')}
                   href={`https://${profile.contact.github}`}
                 />
-              </div>
-
-              <div className="mt-8 pt-6 border-t border-green-500/20 text-center">
-                <p className="text-green-500/70 text-sm font-mono">
-                  &gt; Click any field to copy to clipboard_
-                </p>
-              </div>
-            </div>
+              </CardContent>
+            </Card>
           </div>
         </FadeIn>
       </div>
@@ -86,30 +91,30 @@ interface ContactItemProps {
 
 function ContactItem({ label, value, copied, onCopy, href }: ContactItemProps) {
   return (
-    <div className="group">
-      <div className="flex items-center justify-between gap-4">
-        <span className="text-green-400 font-mono text-sm">{label}:</span>
-        <div className="flex items-center gap-2">
-          {href ? (
-            <a
-              href={href}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-green-500 hover:text-green-400 transition-colors font-mono text-sm"
-            >
-              {value}
-            </a>
-          ) : (
-            <span className="text-green-500 font-mono text-sm">{value}</span>
-          )}
-          <button
-            onClick={onCopy}
-            className="text-green-400 hover:text-green-300 transition-colors text-xs font-mono px-2 py-1 border border-green-500/30 hover:border-green-400/50"
+    <div className="flex items-center justify-between gap-4 p-3 rounded border border-green-500/20 hover:border-green-500/40 transition-colors">
+      <div className="flex items-center gap-3 flex-1 min-w-0">
+        <span className="text-green-400 font-mono text-sm shrink-0">{label}:</span>
+        {href ? (
+          <a
+            href={href}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-green-500 hover:text-green-400 transition-colors font-mono text-sm truncate"
           >
-            {copied ? '[COPIED]' : '[COPY]'}
-          </button>
-        </div>
+            {value}
+          </a>
+        ) : (
+          <span className="text-green-500 font-mono text-sm truncate">{value}</span>
+        )}
       </div>
+      <Button
+        onClick={onCopy}
+        variant="outline"
+        size="sm"
+        className="shrink-0"
+      >
+        {copied ? 'COPIED' : 'COPY'}
+      </Button>
     </div>
   )
 }

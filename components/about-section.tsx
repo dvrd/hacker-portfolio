@@ -1,6 +1,7 @@
 import { profile } from '@/lib/data'
 import { FadeIn } from './fade-in'
 import { GlitchText } from './glitch-text'
+import { Card, CardContent, CardHeader, CardTitle } from './ui/card'
 
 export function AboutSection() {
   return (
@@ -10,15 +11,22 @@ export function AboutSection() {
           <GlitchText
             text="// ABOUT"
             as="h2"
-            className="text-3xl md:text-4xl font-bold mb-8 text-green-400"
+            className="text-3xl md:text-4xl font-bold mb-12 text-green-400"
           />
         </FadeIn>
 
         <FadeIn delay={200}>
-          <div className="max-w-3xl space-y-6">
-            <div className="border border-green-500/30 p-6 bg-black/50 backdrop-blur">
-              <pre className="text-green-500 font-mono text-sm md:text-base whitespace-pre-wrap">
-                <code>{`{
+          <div className="max-w-3xl mx-auto">
+            <Card>
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                  <span className="text-green-500">&gt;</span>
+                  Profile.json
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <pre className="text-green-500 font-mono text-sm md:text-base whitespace-pre-wrap overflow-x-auto">
+                  <code>{`{
   "name": "${profile.name}",
   "role": "${profile.title}",
   "bio": "${profile.bio}",
@@ -28,8 +36,9 @@ export function AboutSection() {
     "github": "${profile.contact.github}"
   }
 }`}</code>
-              </pre>
-            </div>
+                </pre>
+              </CardContent>
+            </Card>
           </div>
         </FadeIn>
       </div>
