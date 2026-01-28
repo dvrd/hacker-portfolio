@@ -1,0 +1,357 @@
+═══════════════════════════════════════════════════════════════════
+  HACKER PORTFOLIO - COMPONENT TREE (Next.js 14+ App Router)
+═══════════════════════════════════════════════════════════════════
+
+app/
+├── layout.tsx [SERVER COMPONENT]
+│   ├── Props: { children: ReactNode }
+│   ├── Metadata: SEO configuration, Open Graph tags
+│   ├── Fonts: JetBrains Mono, Fira Code (next/font/google)
+│   │
+│   ├── <html lang="en" className="dark scroll-smooth">
+│   ├── <head> Metadata, favicon, fonts
+│   └── <body className="bg-black text-green-500 font-mono antialiased">
+│       ├── MatrixBackground [CLIENT COMPONENT] 'use client'
+│       │   └── Canvas-based Matrix rain animation
+│       │
+│       ├── ScanLines [CLIENT COMPONENT] 'use client'
+│       │   └── CRT scan line overlay effect
+│       │
+│       ├── {children}
+│       │
+│       └── Analytics [CLIENT COMPONENT] 'use client'
+│           └── Track page views via Server Action
+│
+├── page.tsx [SERVER COMPONENT]
+│   ├── Props: {}
+│   ├── Data Fetching: Static CV data (no DB query needed)
+│   │
+│   ├── Header [CLIENT COMPONENT] 'use client'
+│   │   ├── Props: { className?: string }
+│   │   ├── State: { isMenuOpen: boolean }
+│   │   │
+│   │   ├── <header className="fixed top-0 w-full z-50 bg-black/90 backdrop-blur">
+│   │   │   ├── TerminalPrompt [SERVER COMPONENT]
+│   │   │   │   └── "> dan@devoured:~$ whoami"
+│   │   │   │
+│   │   │   ├── Navigation [CLIENT COMPONENT] 'use client'
+│   │   │   │   ├── Desktop Nav (hidden md:flex)
+│   │   │   │   │   ├── NavLink (×4) [CLIENT COMPONENT]
+│   │   │   │   │   │   ├── Props: { href: string, label: string }
+│   │   │   │   │   │   ├── Uses: smooth scroll via scrollIntoView
+│   │   │   │   │   │   └── shadcn/ui Button (variant: ghost)
+│   │   │   │   │   │
+│   │   │   │   │   └── DownloadCVButton [CLIENT COMPONENT]
+│   │   │   │   │       ├── Props: { variant?: string }
+│   │   │   │   │       ├── onClick: Download PDF + track analytics
+│   │   │   │   │       └── shadcn/ui Button (glowing effect)
+│   │   │   │   │
+│   │   │   │   └── Mobile Nav (md:hidden)
+│   │   │   │       └── shadcn/ui Sheet
+│   │   │   │           ├── SheetTrigger: Hamburger icon
+│   │   │   │           └── SheetContent: Nav links + CV button
+│   │   │   │
+│   │   │   └── GlitchBorder [CLIENT COMPONENT]
+│   │   │       └── Animated border with glitch effect
+│   │   │
+│   │   └── </header>
+│   │
+│   ├── main
+│   │   │
+│   │   ├── HeroSection [CLIENT COMPONENT] 'use client'
+│   │   │   ├── Props: { profile: ProfileData }
+│   │   │   ├── State: { typingComplete: boolean }
+│   │   │   │
+│   │   │   ├── <section className="h-screen flex items-center justify-center relative">
+│   │   │   │   │
+│   │   │   │   ├── TypingAnimation [CLIENT COMPONENT]
+│   │   │   │   │   ├── Props: { text: string, speed?: number }
+│   │   │   │   │   ├── State: { displayedText: string }
+│   │   │   │   │   ├── useEffect: Character-by-character reveal
+│   │   │   │   │   └── <span className="terminal-cursor" />
+│   │   │   │   │
+│   │   │   │   ├── GlitchText [CLIENT COMPONENT]
+│   │   │   │   │   ├── Props: { children: string }
+│   │   │   │   │   └── CSS animations with data-text attribute
+│   │   │   │   │
+│   │   │   │   └── shadcn/ui Card (terminal styled)
+│   │   │   │       ├── CardContent: Name, title, tagline
+│   │   │   │       └── Custom styling: border-green-500 glow
+│   │   │   │
+│   │   │   └── </section>
+│   │   │
+│   │   ├── AboutSection [SERVER COMPONENT]
+│   │   │   ├── Props: { bio: string }
+│   │   │   │
+│   │   │   ├── <section id="about" className="scroll-mt-20 py-20">
+│   │   │   │   │
+│   │   │   │   ├── TerminalCommand [SERVER COMPONENT]
+│   │   │   │   │   └── "> cat profile.txt"
+│   │   │   │   │
+│   │   │   │   ├── shadcn/ui Card
+│   │   │   │   │   ├── CardContent
+│   │   │   │   │   │   └── <p className="text-white/80">{bio}</p>
+│   │   │   │   │   │
+│   │   │   │   │   └── Custom styling: terminal window aesthetic
+│   │   │   │   │
+│   │   │   │   └── FadeIn [CLIENT COMPONENT]
+│   │   │   │       └── Intersection Observer animation
+│   │   │   │
+│   │   │   └── </section>
+│   │   │
+│   │   ├── SkillsSection [CLIENT COMPONENT] 'use client'
+│   │   │   ├── Props: { skills: SkillCategory[] }
+│   │   │   ├── State: { hoveredSkill: string | null }
+│   │   │   │
+│   │   │   ├── <section id="skills" className="py-20">
+│   │   │   │   │
+│   │   │   │   ├── TerminalCommand [SERVER COMPONENT]
+│   │   │   │   │   └── "> ls -la /usr/local/skills/"
+│   │   │   │   │
+│   │   │   │   └── SkillGrid [CLIENT COMPONENT]
+│   │   │   │       ├── <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+│   │   │   │       │
+│   │   │   │       └── SkillCard (×N) [CLIENT COMPONENT]
+│   │   │   │           ├── Props: { skill: Skill }
+│   │   │   │           ├── State: { isHovered: boolean }
+│   │   │   │           ├── onMouseEnter: Set hover state
+│   │   │   │           │
+│   │   │   │           ├── shadcn/ui Card
+│   │   │   │           │   ├── CardHeader
+│   │   │   │           │   │   ├── Icon (emoji or SVG)
+│   │   │   │           │   │   └── Skill name
+│   │   │   │           │   │
+│   │   │   │           │   ├── CardContent
+│   │   │   │           │   │   └── AnimatedProgressBar [CLIENT COMPONENT]
+│   │   │   │           │   │       ├── Props: { value: number, animated: boolean }
+│   │   │   │           │   │       ├── Uses: Framer Motion or CSS transition
+│   │   │   │           │   │       └── <div className="h-2 bg-green-500" style={{width: value%}} />
+│   │   │   │           │   │
+│   │   │   │           │   └── Hover effect: Glow + animate progress
+│   │   │   │           │
+│   │   │   │           └── shadcn/ui Tooltip (show level percentage)
+│   │   │   │
+│   │   │   └── </section>
+│   │   │
+│   │   ├── WorkHistorySection [CLIENT COMPONENT] 'use client'
+│   │   │   ├── Props: { workHistory: WorkExperience[] }
+│   │   │   ├── State: { expandedJob: number | null }
+│   │   │   │
+│   │   │   ├── <section id="work" className="py-20">
+│   │   │   │   │
+│   │   │   │   ├── TerminalCommand [SERVER COMPONENT]
+│   │   │   │   │   └── "> git log --graph --oneline /career"
+│   │   │   │   │
+│   │   │   │   └── Timeline [CLIENT COMPONENT]
+│   │   │   │       ├── <div className="relative border-l-2 border-green-500/30">
+│   │   │   │       │
+│   │   │   │       └── TimelineNode (×N) [CLIENT COMPONENT]
+│   │   │   │           ├── Props: { job: WorkExperience, index: number }
+│   │   │   │           ├── State: { isExpanded: boolean }
+│   │   │   │           ├── onClick: Toggle expand/collapse
+│   │   │   │           │
+│   │   │   │           ├── Node Indicator (● with glow)
+│   │   │   │           │
+│   │   │   │           ├── shadcn/ui Card
+│   │   │   │           │   ├── CardHeader
+│   │   │   │           │   │   ├── Company + Position
+│   │   │   │           │   │   ├── Period + Location
+│   │   │   │           │   │   └── shadcn/ui Badge (if current: "Current")
+│   │   │   │           │   │
+│   │   │   │           │   ├── CardContent (conditional: isExpanded)
+│   │   │   │           │   │   ├── Highlights list
+│   │   │   │           │   │   └── Tech stack badges
+│   │   │   │           │   │       └── shadcn/ui Badge (×N)
+│   │   │   │           │   │
+│   │   │   │           │   └── Expand animation: height transition
+│   │   │   │           │
+│   │   │   │           └── FadeIn on scroll (Intersection Observer)
+│   │   │   │
+│   │   │   └── </section>
+│   │   │
+│   │   └── ContactSection [CLIENT COMPONENT] 'use client'
+│   │       ├── Props: { contact: ContactInfo }
+│   │       ├── State: { copiedField: string | null }
+│   │       │
+│   │       ├── <section id="contact" className="py-20">
+│   │       │   │
+│   │       │   ├── TerminalCommand [SERVER COMPONENT]
+│   │       │   │   └── "> cat ~/.config/contacts"
+│   │       │   │
+│   │       │   ├── ContactGrid [CLIENT COMPONENT]
+│   │       │   │   ├── <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+│   │       │   │   │
+│   │       │   │   └── CopyToClipboard (×4) [CLIENT COMPONENT]
+│   │       │   │       ├── Props: { text: string, label: string }
+│   │       │   │       ├── onClick: navigator.clipboard.writeText()
+│   │       │   │       ├── shadcn/ui Button (variant: outline)
+│   │       │   │       └── shadcn/ui Toast (success feedback)
+│   │       │   │
+│   │       │   └── DownloadCVButton [CLIENT COMPONENT]
+│   │       │       ├── Enhanced with glowing animation
+│   │       │       └── "> DOWNLOAD_CV.pdf >> /downloads"
+│   │       │
+│   │       └── </section>
+│   │
+│   └── Footer [SERVER COMPONENT]
+│       ├── <footer className="border-t border-green-900/20 py-8">
+│       │   ├── TerminalCommand
+│       │   │   └── "> exit"
+│       │   └── <p className="text-center text-green-500/50">
+│       │       "Connection closed by remote host"
+│       │
+│       └── </footer>
+│
+└── api/
+    ├── cv/
+    │   └── download/
+    │       └── route.ts [ROUTE HANDLER]
+    │           ├── GET handler
+    │           ├── Track download via Server Action
+    │           ├── Return PDF file stream
+    │           └── Headers: Content-Type, Content-Disposition
+    │
+    └── analytics/
+        ├── pageview/
+        │   └── route.ts [ROUTE HANDLER]
+        │       ├── POST handler
+        │       └── Track page view in database
+        │
+        └── stats/
+            └── route.ts [ROUTE HANDLER]
+                ├── GET handler
+                └── Return aggregate analytics
+
+═══════════════════════════════════════════════════════════════════
+  SHARED COMPONENTS (components/)
+═══════════════════════════════════════════════════════════════════
+
+components/ui/ [SHADCN/UI COMPONENTS - Generated by CLI]
+├── button.tsx
+├── card.tsx
+├── badge.tsx
+├── sheet.tsx
+├── separator.tsx
+├── tooltip.tsx
+├── toast.tsx
+├── progress.tsx
+└── skeleton.tsx
+
+components/effects/ [CUSTOM CLIENT COMPONENTS]
+├── MatrixRain.tsx [CLIENT 'use client']
+│   ├── Props: { className?: string, speed?: number }
+│   ├── useEffect: Canvas animation loop
+│   ├── useRef: Canvas element
+│   └── requestAnimationFrame: 60fps rendering
+
+├── GlitchText.tsx [CLIENT 'use client']
+│   ├── Props: { children: string, className?: string }
+│   ├── data-text attribute for CSS ::before/::after
+│   └── CSS animations: clip-path, transform
+
+├── TypingAnimation.tsx [CLIENT 'use client']
+│   ├── Props: { text: string, speed?: number }
+│   ├── State: { displayedText: string, cursorVisible: boolean }
+│   ├── useEffect: Typing loop
+│   └── Blinking cursor animation
+
+├── ScanLines.tsx [CLIENT 'use client']
+│   ├── Props: { opacity?: number }
+│   └── Fixed overlay with repeating-linear-gradient
+
+└── FadeIn.tsx [CLIENT 'use client']
+    ├── Props: { children: ReactNode, delay?: number }
+    ├── useIntersectionObserver hook
+    └── CSS transition: opacity + transform
+
+components/ [FEATURE COMPONENTS]
+├── Header.tsx [CLIENT 'use client']
+├── Navigation.tsx [CLIENT 'use client']
+├── HeroSection.tsx [CLIENT 'use client']
+├── AboutSection.tsx [SERVER]
+├── SkillsSection.tsx [CLIENT 'use client']
+├── SkillCard.tsx [CLIENT 'use client']
+├── AnimatedProgressBar.tsx [CLIENT 'use client']
+├── WorkHistorySection.tsx [CLIENT 'use client']
+├── Timeline.tsx [CLIENT 'use client']
+├── TimelineNode.tsx [CLIENT 'use client']
+├── ContactSection.tsx [CLIENT 'use client']
+├── CopyToClipboard.tsx [CLIENT 'use client']
+├── DownloadCVButton.tsx [CLIENT 'use client']
+├── Footer.tsx [SERVER]
+├── TerminalCommand.tsx [SERVER]
+├── TerminalPrompt.tsx [SERVER]
+└── Analytics.tsx [CLIENT 'use client']
+
+═══════════════════════════════════════════════════════════════════
+  LIB (lib/)
+═══════════════════════════════════════════════════════════════════
+
+lib/
+├── db.ts [Database client]
+│   └── Drizzle instance with PostgreSQL (or Vercel Postgres)
+│
+├── schema.ts [Drizzle schema]
+│   ├── cv_downloads table
+│   └── page_views table
+│
+├── actions.ts [Server Actions]
+│   ├── 'use server'
+│   ├── trackCVDownload(data)
+│   ├── trackPageView(data)
+│   └── getAnalyticsStats(period)
+│
+├── data.ts [Static data]
+│   ├── profile (from CV)
+│   ├── skills (from CV)
+│   ├── workHistory (from CV)
+│   └── education (from CV)
+│
+├── utils.ts [Helper functions]
+│   ├── cn (classnames merger from shadcn)
+│   ├── formatDate
+│   └── getIPAddress (from request headers)
+│
+└── hooks.ts [Custom React hooks]
+    ├── useIntersectionObserver
+    ├── useMediaQuery
+    ├── useCopyToClipboard
+    └── usePrefersReducedMotion
+
+═══════════════════════════════════════════════════════════════════
+  COMPONENT DEPENDENCIES
+═══════════════════════════════════════════════════════════════════
+
+UI Library: shadcn/ui (Radix UI primitives + Tailwind)
+Animations: Framer Motion (optional) or CSS animations
+State: React hooks (useState, useEffect, useRef)
+Database: Drizzle ORM with PostgreSQL
+Type Safety: TypeScript with strict mode
+Fonts: JetBrains Mono, Fira Code (next/font/google)
+Icons: Lucide React (from shadcn/ui)
+
+═══════════════════════════════════════════════════════════════════
+  NAMING CONVENTIONS
+═══════════════════════════════════════════════════════════════════
+
+Components: PascalCase (MatrixRain, HeroSection)
+Server Actions: camelCase (trackCVDownload, trackPageView)
+Files: PascalCase for components, kebab-case for routes
+Props: camelCase (className, speed, isExpanded)
+CSS classes: Tailwind utility classes (kebab-case)
+Types: PascalCase (ProfileData, SkillCategory)
+Constants: UPPER_SNAKE_CASE (MATRIX_SPEED, TYPING_DELAY)
+
+═══════════════════════════════════════════════════════════════════
+  TYPE DEFINITIONS (types/)
+═══════════════════════════════════════════════════════════════════
+
+types/
+├── index.ts
+│   ├── type ProfileData = { ... }
+│   ├── type Skill = { name, level, icon }
+│   ├── type SkillCategory = { category, items: Skill[] }
+│   ├── type WorkExperience = { company, position, period, ... }
+│   ├── type ContactInfo = { email, phone, location, github }
+│   ├── type CVDownload = typeof schema.cv_downloads.$inferSelect
+│   └── type PageView = typeof schema.page_views.$inferSelect

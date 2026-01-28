@@ -1,0 +1,424 @@
+═══════════════════════════════════════════════════════════════════
+  HACKER PORTFOLIO - BINDING MAP
+  UI Element → Data Path / Server Action / Event Handler
+═══════════════════════════════════════════════════════════════════
+
+# Header Component (Client Component)
+header.terminal-prompt.text → "> dan@devoured:~$ whoami"
+header.nav-links.items → ["About", "Skills", "Work", "Contact"]
+header.nav-links[i].onClick → (e) => {
+  e.preventDefault()
+  const section = document.getElementById(href.slice(1))
+  section?.scrollIntoView({ behavior: 'smooth' })
+}
+header.download-button.onClick → async () => {
+  'use client'
+  const response = await fetch('/api/cv/download')
+  const blob = await response.blob()
+  const url = window.URL.createObjectURL(blob)
+  const a = document.createElement('a')
+  a.href = url
+  a.download = 'dan_castrillo_cv.pdf'
+  a.click()
+
+  // Show success toast
+  toast({ title: "CV Downloaded", description: "dan_castrillo_cv.pdf" })
+}
+
+# Mobile Menu (Sheet component)
+mobile-menu.trigger.onClick → () => setIsMenuOpen(!isMenuOpen)
+mobile-menu.nav-links[i].onClick → () => {
+  // Smooth scroll
+  document.getElementById(href.slice(1))?.scrollIntoView({ behavior: 'smooth' })
+  // Close menu
+  setIsMenuOpen(false)
+}
+
+# Hero Section (Client Component)
+hero.name.text → profile.name // "DAN CASTRILLO"
+hero.title.text → profile.title // "SOFTWARE ENGINEER"
+hero.tagline.text → profile.tagline // "10 YEARS BUILDING SYSTEMS"
+hero.typing-animation.text → hero.name + "\n" + hero.title + "\n" + hero.tagline
+hero.typing-animation.speed → 50 // ms per character
+hero.typing-animation.useEffect → () => {
+  if (currentIndex < text.length) {
+    const timeout = setTimeout(() => {
+      setDisplayedText(text.slice(0, currentIndex + 1))
+      setCurrentIndex(currentIndex + 1)
+    }, speed)
+    return () => clearTimeout(timeout)
+  }
+}
+
+# Matrix Rain (Client Component - Canvas)
+matrix-rain.canvas.width → window.innerWidth
+matrix-rain.canvas.height → window.innerHeight
+matrix-rain.characters → "01アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヲン"
+matrix-rain.draw → (ctx, columns, drops) => {
+  ctx.fillStyle = 'rgba(0, 0, 0, 0.05)'
+  ctx.fillRect(0, 0, canvas.width, canvas.height)
+  ctx.fillStyle = '#00ff41'
+  ctx.font = '15px monospace'
+
+  for (let i = 0; i < drops.length; i++) {
+    const text = characters[Math.floor(Math.random() * characters.length)]
+    ctx.fillText(text, i * 20, drops[i] * 20)
+
+    if (drops[i] * 20 > canvas.height && Math.random() > 0.975) {
+      drops[i] = 0
+    }
+    drops[i]++
+  }
+}
+matrix-rain.animation-loop → requestAnimationFrame(draw)
+matrix-rain.disabled → prefersReducedMotion // Accessibility
+
+# Glitch Effect (Client Component)
+glitch-text.data-text → children // For CSS ::before/::after
+glitch-text.className → cn(
+  "relative inline-block",
+  "before:content-[attr(data-text)]",
+  "before:absolute before:top-0 before:left-0",
+  "before:text-cyan-500 before:opacity-80",
+  "before:animate-glitch-1",
+  "after:content-[attr(data-text)]",
+  "after:absolute after:top-0 after:left-0",
+  "after:text-green-500 after:opacity-80",
+  "after:animate-glitch-2"
+)
+
+# About Section (Server Component)
+about.title.text → "> cat profile.txt"
+about.bio.text → profile.bio
+about.card.className → "border-green-500/30 bg-black/50 backdrop-blur"
+
+# Skills Section (Client Component)
+skills.title.text → "> ls -la /usr/local/skills/"
+skills.categories → data.skills // Array of SkillCategory
+skills.grid.className → "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4"
+
+# Skill Card (Client Component with hover)
+skill-card.name → skill.name
+skill-card.icon → skill.icon
+skill-card.level → skill.level
+skill-card.progress-bar.width → `${skill.level}%`
+skill-card.progress-bar.animated → isHovered
+skill-card.onMouseEnter → () => setIsHovered(true)
+skill-card.onMouseLeave → () => setIsHovered(false)
+skill-card.progress-bar.transition → {
+  width: isHovered ? `${skill.level}%` : '0%',
+  transition: 'width 1s ease-out'
+}
+skill-card.tooltip.content → `${skill.name}: ${skill.level}%`
+
+# Work History Section (Client Component)
+work.title.text → "> git log --graph --oneline /career"
+work.timeline.items → data.workHistory // Array of WorkExperience
+work.timeline.className → "relative border-l-2 border-green-500/30 pl-8 space-y-8"
+
+# Timeline Node (Client Component with expand/collapse)
+timeline-node.company → job.company
+timeline-node.position → job.position
+timeline-node.period → job.period
+timeline-node.location → job.location
+timeline-node.current-badge.visible → job.current === true
+timeline-node.current-badge.text → "Current"
+timeline-node.highlights → job.highlights // Array of strings
+timeline-node.tech-stack → job.tech // Array of strings
+timeline-node.expanded → expandedJob === job.id
+timeline-node.onClick → () => {
+  setExpandedJob(expandedJob === job.id ? null : job.id)
+}
+timeline-node.card-content.visible → expandedJob === job.id
+timeline-node.card-content.maxHeight → expandedJob === job.id ? 'auto' : '0'
+timeline-node.card-content.transition → 'max-height 0.3s ease-in-out'
+
+# Timeline Node Indicator
+timeline-node.indicator.className → cn(
+  "absolute -left-[41px] w-8 h-8 rounded-full",
+  "bg-green-500 border-4 border-black",
+  job.current ? "shadow-[0_0_20px_rgba(0,255,0,0.8)]" : "shadow-[0_0_10px_rgba(0,255,0,0.5)]"
+)
+
+# Tech Stack Badges
+timeline-node.tech-badges[i].text → tech
+timeline-node.tech-badges[i].className → "bg-green-500/10 text-green-500 border-green-500/30"
+
+# Contact Section (Client Component)
+contact.title.text → "> cat ~/.config/contacts"
+contact.email → profile.contact.email
+contact.phone → profile.contact.phone
+contact.location → profile.contact.location
+contact.github → profile.contact.github
+
+# Copy to Clipboard (Client Component)
+copy-button.text → contactField // email, phone, etc.
+copy-button.label → label // "Email", "Phone", etc.
+copy-button.onClick → async () => {
+  try {
+    await navigator.clipboard.writeText(text)
+    setCopiedField(label)
+
+    toast({
+      title: "Copied!",
+      description: `${label} copied to clipboard`,
+      variant: "default"
+    })
+
+    setTimeout(() => setCopiedField(null), 2000)
+  } catch (err) {
+    toast({
+      title: "Error",
+      description: "Failed to copy to clipboard",
+      variant: "destructive"
+    })
+  }
+}
+copy-button.icon → copiedField === label ? <Check /> : <Copy />
+copy-button.className → cn(
+  "border-green-500/30 hover:bg-green-500/10",
+  "transition-all duration-300",
+  copiedField === label && "border-green-500 bg-green-500/20"
+)
+
+# Download CV Button (Client Component with analytics)
+download-cv-button.text → "[ DOWNLOAD_CV.pdf >> /downloads ]"
+download-cv-button.onClick → async () => {
+  startTransition(async () => {
+    // Track download
+    await trackCVDownload({
+      ip: await getIPAddress(),
+      userAgent: navigator.userAgent,
+      referer: document.referrer
+    })
+
+    // Download file
+    const link = document.createElement('a')
+    link.href = '/dan_castrillo_cv.pdf'
+    link.download = 'dan_castrillo_cv.pdf'
+    link.click()
+
+    toast({
+      title: "CV Downloaded",
+      description: "dan_castrillo_cv.pdf"
+    })
+  })
+}
+download-cv-button.className → cn(
+  "bg-green-500/10 border-2 border-green-500",
+  "hover:bg-green-500 hover:text-black",
+  "shadow-[0_0_20px_rgba(0,255,0,0.3)]",
+  "hover:shadow-[0_0_40px_rgba(0,255,0,0.8)]",
+  "transition-all duration-300",
+  "animate-pulse"
+)
+download-cv-button.isPending → isPending // from useTransition
+
+# Footer (Server Component)
+footer.text → "> exit"
+footer.message → "Connection closed by remote host"
+footer.className → "border-t border-green-900/20 py-8 text-center"
+
+# Analytics Tracking (Client Component)
+analytics.pageview.onMount → async () => {
+  await trackPageView({
+    pagePath: window.location.pathname,
+    sessionId: crypto.randomUUID(),
+    referer: document.referrer
+  })
+}
+analytics.track-scroll.onScroll → throttle(() => {
+  const sections = ['about', 'skills', 'work', 'contact']
+  sections.forEach(section => {
+    const element = document.getElementById(section)
+    if (element && isInViewport(element)) {
+      trackSectionView(section)
+    }
+  })
+}, 1000)
+
+═══════════════════════════════════════════════════════════════════
+  SERVER ACTIONS (lib/actions.ts)
+═══════════════════════════════════════════════════════════════════
+
+'use server'
+
+export async function trackCVDownload(data: {
+  ip?: string
+  userAgent?: string
+  referer?: string
+}) {
+  const db = await getDB()
+
+  await db.insert(schema.cv_downloads).values({
+    ip_address: data.ip ?? null,
+    user_agent: data.userAgent ?? null,
+    referer: data.referer ?? null,
+    downloaded_at: new Date(),
+    // Optional: Get location from IP via API
+    country: await getCountryFromIP(data.ip),
+    city: await getCityFromIP(data.ip)
+  })
+
+  revalidatePath('/api/analytics/stats')
+}
+
+export async function trackPageView(data: {
+  pagePath: string
+  sessionId?: string
+  referer?: string
+}) {
+  const db = await getDB()
+
+  await db.insert(schema.page_views).values({
+    page_path: data.pagePath,
+    ip_address: await getIPAddress(),
+    user_agent: navigator.userAgent,
+    referer: data.referer ?? null,
+    viewed_at: new Date(),
+    session_id: data.sessionId ?? null
+  })
+
+  revalidatePath('/api/analytics/stats')
+}
+
+export async function getAnalyticsStats(period: 'day' | 'week' | 'month' | 'all' = 'all') {
+  const db = await getDB()
+
+  const downloads = await db
+    .select()
+    .from(schema.cv_downloads)
+    .where(/* date filter based on period */)
+
+  const views = await db
+    .select()
+    .from(schema.page_views)
+    .where(/* date filter based on period */)
+
+  return {
+    cv_downloads: {
+      total: downloads.length,
+      by_country: groupBy(downloads, 'country')
+    },
+    page_views: {
+      total: views.length,
+      by_page: groupBy(views, 'page_path')
+    }
+  }
+}
+
+═══════════════════════════════════════════════════════════════════
+  ROUTE HANDLERS (app/api/)
+═══════════════════════════════════════════════════════════════════
+
+# GET /api/cv/download
+export async function GET(request: Request) {
+  // Track download
+  await trackCVDownload({
+    ip: request.headers.get('x-forwarded-for') ?? request.headers.get('x-real-ip'),
+    userAgent: request.headers.get('user-agent') ?? undefined,
+    referer: request.headers.get('referer') ?? undefined
+  })
+
+  // Return PDF file
+  const filePath = path.join(process.cwd(), 'public', 'dan_castrillo_cv.pdf')
+  const fileBuffer = await fs.readFile(filePath)
+
+  return new Response(fileBuffer, {
+    headers: {
+      'Content-Type': 'application/pdf',
+      'Content-Disposition': 'attachment; filename="dan_castrillo_cv.pdf"'
+    }
+  })
+}
+
+# POST /api/analytics/pageview
+export async function POST(request: Request) {
+  const body = await request.json()
+
+  await trackPageView({
+    pagePath: body.page_path,
+    sessionId: body.session_id,
+    referer: body.referer
+  })
+
+  return Response.json({ success: true })
+}
+
+# GET /api/analytics/stats
+export async function GET(request: Request) {
+  const { searchParams } = new URL(request.url)
+  const period = searchParams.get('period') as 'day' | 'week' | 'month' | 'all' ?? 'all'
+
+  const stats = await getAnalyticsStats(period)
+
+  return Response.json(stats)
+}
+
+═══════════════════════════════════════════════════════════════════
+  ENVIRONMENT VARIABLES (.env.local)
+═══════════════════════════════════════════════════════════════════
+
+DATABASE_URL=postgresql://user:password@localhost:5432/portfolio
+# Or use Vercel Postgres:
+# POSTGRES_URL=postgres://default:xxx@xxx.postgres.vercel-storage.com/verceldb
+
+NEXT_PUBLIC_APP_URL=http://localhost:3000
+# Production: https://dancastrillo.com
+
+# Optional: For IP geolocation
+IPINFO_API_KEY=xxx
+
+# Optional: For advanced analytics
+VERCEL_ANALYTICS_ID=xxx
+
+═══════════════════════════════════════════════════════════════════
+  TYPE SAFETY (Drizzle inferred types)
+═══════════════════════════════════════════════════════════════════
+
+type CVDownload = typeof schema.cv_downloads.$inferSelect
+type InsertCVDownload = typeof schema.cv_downloads.$inferInsert
+type PageView = typeof schema.page_views.$inferSelect
+type InsertPageView = typeof schema.page_views.$inferInsert
+
+═══════════════════════════════════════════════════════════════════
+  ACCESSIBILITY BINDINGS
+═══════════════════════════════════════════════════════════════════
+
+# Detect reduced motion preference
+const prefersReducedMotion = useMediaQuery('(prefers-reduced-motion: reduce)')
+
+# Disable animations if user prefers
+matrix-rain.enabled → !prefersReducedMotion
+glitch-effect.enabled → !prefersReducedMotion
+typing-animation.enabled → !prefersReducedMotion
+parallax-effects.enabled → !prefersReducedMotion
+
+# Keyboard navigation
+nav-links[i].onKeyPress → (e) => {
+  if (e.key === 'Enter' || e.key === ' ') {
+    e.preventDefault()
+    onClick()
+  }
+}
+
+# Skip to content link
+skip-link.onClick → () => {
+  document.getElementById('main-content')?.focus()
+}
+skip-link.className → "sr-only focus:not-sr-only focus:absolute focus:top-0 focus:left-0 focus:z-50"
+
+# ARIA labels
+download-cv-button['aria-label'] → "Download CV PDF file"
+nav-link['aria-label'] → `Navigate to ${section} section`
+skill-card['aria-label'] → `${skill.name} proficiency ${skill.level} percent`
+timeline-node['aria-expanded'] → expandedJob === job.id
+copy-button['aria-label'] → `Copy ${label} to clipboard`
+
+# Focus management
+sheet.onOpenChange → (open) => {
+  if (!open) {
+    // Return focus to trigger button
+    triggerRef.current?.focus()
+  }
+}

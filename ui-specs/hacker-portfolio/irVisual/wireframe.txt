@@ -1,0 +1,234 @@
+═══════════════════════════════════════════════════════════════════
+  HACKER PORTFOLIO - WIREFRAME (Matrix/Cyberpunk Aesthetic)
+═══════════════════════════════════════════════════════════════════
+
+┌─ Main Layout ──────────────────────────────────────────────────┐
+│                                                                  │
+│ ┌─ Terminal Header (fixed top-0 z-50) ──────────────────────┐  │
+│ │ > dan@devoured:~$ whoami                                   │  │
+│ │ ┌─ Nav Links (font-mono text-xs) ───┐  [CV.pdf ↓]        │  │
+│ │ │ /about /skills /work /contact      │                     │  │
+│ │ └────────────────────────────────────┘                     │  │
+│ └────────────────────────────────────────────────────────────┘  │
+│                                                                  │
+│ ┌─ Hero Section (h-screen flex items-center) ───────────────┐  │
+│ │                                                             │  │
+│ │   ╔═════════════════════════════════════════╗              │  │
+│ │   ║ > DAN CASTRILLO                         ║              │  │
+│ │   ║ > SOFTWARE ENGINEER                     ║              │  │
+│ │   ║ > 10 YEARS BUILDING SYSTEMS_            ║              │  │
+│ │   ╚═════════════════════════════════════════╝              │  │
+│ │                                                             │  │
+│ │   [Matrix rain animation in background]                    │  │
+│ │   [Glitch effect on text]                                  │  │
+│ │                                                             │  │
+│ └─────────────────────────────────────────────────────────────┘  │
+│                                                                  │
+│ ┌─ About Section (#about scroll-mt-20) ──────────────────────┐  │
+│ │ > cat profile.txt                                           │  │
+│ │                                                             │  │
+│ │ ┌─ Terminal-style text box (border-green-500) ──────────┐  │  │
+│ │ │ Experienced Software Engineer with 10 years building   │  │  │
+│ │ │ production systems across the full stack. Polyglot     │  │  │
+│ │ │ engineer comfortable working in JavaScript/TypeScript  │  │  │
+│ │ │ ecosystems, Python, and systems languages...           │  │  │
+│ │ └────────────────────────────────────────────────────────┘  │  │
+│ └─────────────────────────────────────────────────────────────┘  │
+│                                                                  │
+│ ┌─ Skills Section (#skills) ─────────────────────────────────┐  │
+│ │ > ls -la /usr/local/skills/                                 │  │
+│ │                                                             │  │
+│ │ ┌─ Skill Grid (grid grid-cols-2 md:grid-cols-4) ────────┐  │  │
+│ │ │ ┌────────┐ ┌────────┐ ┌────────┐ ┌────────┐          │  │  │
+│ │ │ │ JS/TS  │ │ Python │ │   Go   │ │ Rust   │          │  │  │
+│ │ │ │ ▓▓▓▓▓░ │ │ ▓▓▓▓░░ │ │ ▓▓▓▓░░ │ │ ▓▓▓░░░ │          │  │  │
+│ │ │ └────────┘ └────────┘ └────────┘ └────────┘          │  │  │
+│ │ │ ┌────────┐ ┌────────┐ ┌────────┐ ┌────────┐          │  │  │
+│ │ │ │ React  │ │  Vue   │ │ Next.js│ │ Node   │          │  │  │
+│ │ │ │ ▓▓▓▓▓░ │ │ ▓▓▓▓░░ │ │ ▓▓▓▓▓░ │ │ ▓▓▓▓▓░ │          │  │  │
+│ │ │ └────────┘ └────────┘ └────────┘ └────────┘          │  │  │
+│ │ └───────────────────────────────────────────────────────┘  │  │
+│ └─────────────────────────────────────────────────────────────┘  │
+│                                                                  │
+│ ┌─ Work History Section (#work) ────────────────────────────┐  │
+│ │ > git log --graph --oneline /career                         │  │
+│ │                                                             │  │
+│ │ ┌─ Timeline (vertical line with nodes) ──────────────────┐  │  │
+│ │ │ ● [2023-Current] Upwork                                 │  │  │
+│ │ │ │ Senior Software Engineer                              │  │  │
+│ │ │ │ • Architected Featured Jobs ads unit                 │  │  │
+│ │ │ │ • Doubled conversion rates (2.4% → 4%)               │  │  │
+│ │ │ │ • 40% → 90% test coverage                            │  │  │
+│ │ │ │                                                        │  │  │
+│ │ │ ● [2023] Tecnologia Urbana                              │  │  │
+│ │ │ │ Lead Software Engineer                                │  │  │
+│ │ │ │ • Built traffic monitoring with CV pipeline          │  │  │
+│ │ │ │ • OpenCV + Go backend (30fps 1080p)                  │  │  │
+│ │ │ │                                                        │  │  │
+│ │ │ ● [2021-2023] Lantum                                    │  │  │
+│ │ │   Senior Software Engineer                              │  │  │
+│ │ │   • Rebuilt billing system (50% ticket reduction)      │  │  │
+│ │ └────────────────────────────────────────────────────────┘  │  │
+│ └─────────────────────────────────────────────────────────────┘  │
+│                                                                  │
+│ ┌─ Contact Section (#contact) ───────────────────────────────┐  │
+│ │ > cat ~/.config/contacts                                    │  │
+│ │                                                             │  │
+│ │ ┌─ Contact Grid (grid grid-cols-1 md:grid-cols-2) ──────┐  │  │
+│ │ │ [dan@devoured.io]     [github.com/dvrd]               │  │  │
+│ │ │ [+58412-650770]       [Caracas, Venezuela]            │  │  │
+│ │ └───────────────────────────────────────────────────────┘  │  │
+│ │                                                             │  │
+│ │ ┌─ Download CV Button (glowing effect) ─────────────────┐  │  │
+│ │ │  [ DOWNLOAD_CV.pdf >> /downloads ]                     │  │  │
+│ │ └────────────────────────────────────────────────────────┘  │  │
+│ └─────────────────────────────────────────────────────────────┘  │
+│                                                                  │
+│ ┌─ Footer (border-t border-green-900/20) ────────────────────┐  │
+│ │ > exit                                                      │  │
+│ │ Connection closed by remote host                            │  │
+│ └─────────────────────────────────────────────────────────────┘  │
+│                                                                  │
+└──────────────────────────────────────────────────────────────────┘
+
+═══════════════════════════════════════════════════════════════════
+  STATE MATRIX (Component Visibility)
+═══════════════════════════════════════════════════════════════════
+
+┌─────────────────────┬──────────┬──────────┬──────────┐
+│ Component           │ Initial  │ Hover    │ Active   │
+├─────────────────────┼──────────┼──────────┼──────────┤
+│ Matrix Rain         │    ✓     │    ✓     │    ✓     │
+│ Glitch Effect       │    ✓     │    ✓     │    ✓     │
+│ Nav Links           │    ✓     │ Glow     │ Glow++   │
+│ Hero Terminal       │    ✓     │    ✓     │    ✓     │
+│ Skill Bars          │    ✓     │ Animate  │    -     │
+│ Timeline Nodes      │    ✓     │ Expand   │    -     │
+│ Download Button     │    ✓     │ Glow++   │ Download │
+│ Cursor Blink        │    ✓     │    ✓     │    ✓     │
+└─────────────────────┴──────────┴──────────┴──────────┘
+
+═══════════════════════════════════════════════════════════════════
+  ACTION MATRIX (User Interactions)
+═══════════════════════════════════════════════════════════════════
+
+┌────────────────────────┬──────────────────────────────────────┐
+│ Action                 │ Behavior                             │
+├────────────────────────┼──────────────────────────────────────┤
+│ Click Nav Link         │ Smooth scroll to section             │
+│ Click CV Button        │ Download PDF from /public            │
+│ Hover Skill Card       │ Animate progress bar                 │
+│ Hover Timeline Node    │ Expand job details                   │
+│ Scroll                 │ Parallax effect on matrix rain       │
+│ Page Load              │ Typing animation for hero text       │
+│ Click Contact Link     │ Copy to clipboard + toast            │
+└────────────────────────┴──────────────────────────────────────┘
+
+═══════════════════════════════════════════════════════════════════
+  RESPONSIVE BREAKPOINTS (Tailwind Mobile-First)
+═══════════════════════════════════════════════════════════════════
+
+Mobile (<640px):
+  - Vertical stacking all sections
+  - Single column skill grid
+  - Simplified timeline (compact)
+  - Hamburger menu (Sheet component)
+  - Full-width hero terminal
+  - Bottom-fixed download button
+
+Tablet (640px-1024px):
+  - 2-column skill grid
+  - Side-by-side contact info
+  - Expanded timeline with details
+  - Horizontal nav links
+
+Desktop (>1024px):
+  - 4-column skill grid
+  - Full timeline with animations
+  - Parallax effects enabled
+  - Hover states active
+  - Matrix rain in background
+
+═══════════════════════════════════════════════════════════════════
+  NEXT.JS PATTERNS
+═══════════════════════════════════════════════════════════════════
+
+Server Components (Default):
+  - app/page.tsx (main portfolio page)
+  - components/About.tsx (static content)
+  - components/Skills.tsx (static skill list)
+  - components/WorkHistory.tsx (static job data)
+  - components/Contact.tsx (contact info display)
+
+Client Components ('use client'):
+  - components/MatrixRain.tsx (canvas animation)
+  - components/GlitchText.tsx (CSS animation)
+  - components/TypingAnimation.tsx (hero text)
+  - components/NavMenu.tsx (smooth scroll)
+  - components/DownloadButton.tsx (click handler)
+  - components/SkillCard.tsx (hover animations)
+  - components/TimelineNode.tsx (expand/collapse)
+  - components/CopyToClipboard.tsx (clipboard API)
+
+Route Handlers:
+  - app/api/analytics/route.ts (track CV downloads)
+
+Static Assets:
+  - /public/dan_castrillo_cv.pdf (downloadable CV)
+
+═══════════════════════════════════════════════════════════════════
+  SHADCN/UI COMPONENTS USED
+═══════════════════════════════════════════════════════════════════
+
+- Button (variant: outline, ghost)
+- Card, CardHeader, CardContent (skill cards, work history)
+- Badge (skill tags, status indicators)
+- Sheet (mobile navigation menu)
+- Separator (section dividers)
+- Tooltip (hover info on skills)
+- Toast (copy to clipboard feedback)
+- Progress (skill level indicators - custom styled)
+- Skeleton (loading states if needed)
+
+═══════════════════════════════════════════════════════════════════
+  THEME & STYLING
+═══════════════════════════════════════════════════════════════════
+
+Color Palette (Matrix-inspired):
+  - Background: black (#000000)
+  - Primary: green (#00ff00, #00ff41)
+  - Secondary: cyan (#00ffff)
+  - Accent: white (#ffffff)
+  - Muted: gray-800/gray-900
+  - Border: green-500/10, green-500/20
+
+Typography:
+  - Primary: 'JetBrains Mono', 'Fira Code', monospace
+  - Fallback: system-ui, monospace
+  - Sizes: text-xs to text-4xl
+
+Effects:
+  - Text glow: text-shadow with green/cyan
+  - Border glow: box-shadow with green-500
+  - Glitch: CSS animations with clip-path
+  - Matrix rain: Canvas element with falling characters
+  - Cursor blink: CSS animation on ::after pseudo-element
+  - Scan lines: repeating-linear-gradient overlay
+
+Animations:
+  - Typing effect: character-by-character reveal
+  - Fade in: opacity 0 → 1 with transform
+  - Slide in: translateY with spring easing
+  - Glow pulse: animate-pulse with custom timing
+
+═══════════════════════════════════════════════════════════════════
+  ACCESSIBILITY FEATURES
+═══════════════════════════════════════════════════════════════════
+
+- prefers-reduced-motion: Disable all animations
+- High contrast mode: Increase text/background contrast
+- Keyboard navigation: Tab through all interactive elements
+- ARIA labels: Screen reader descriptions
+- Focus indicators: Visible focus rings
+- Skip to content: Skip navigation link
+- Alt text: Descriptive text for visual elements

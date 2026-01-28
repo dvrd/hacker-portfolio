@@ -1,0 +1,611 @@
+{
+  "$schema": "ui-spec/1.0.0",
+  "id": "hacker-portfolio",
+  "name": "Dan Castrillo Hacker Portfolio",
+  "stack": {
+    "framework": "Next.js 14+ (App Router)",
+    "uiLibrary": "shadcn/ui",
+    "styling": "Tailwind CSS",
+    "orm": "Drizzle",
+    "database": "PostgreSQL",
+    "deployment": "Vercel",
+    "cloud": null
+  },
+  "status": "specified",
+
+  "business": {
+    "problemStatement": "Dan needs a personal portfolio website to showcase his 10 years of software engineering experience with a unique hacker/Matrix aesthetic that stands out from typical portfolios",
+    "userValue": "Visitors can quickly understand Dan's skills, experience, and download his CV. The unique Matrix theme makes the portfolio memorable and reflects Dan's technical expertise.",
+    "successMetrics": [
+      {
+        "metric": "CV download rate",
+        "target": ">15%",
+        "measurement": "Track downloads vs page views"
+      },
+      {
+        "metric": "Page load time (mobile)",
+        "target": "<2 seconds",
+        "measurement": "Lighthouse performance score >90"
+      },
+      {
+        "metric": "Time on site",
+        "target": ">2 minutes",
+        "measurement": "Analytics tracking"
+      }
+    ],
+    "stakeholders": ["Dan (owner)", "Recruiters", "Potential clients/employers"],
+    "priority": "P0",
+    "targetRelease": "Q1 2026"
+  },
+
+  "github": {
+    "repository": null,
+    "issue": {
+      "number": null,
+      "url": null,
+      "labels": ["enhancement", "portfolio", "copilot-ready"]
+    },
+    "branch": "feature/hacker-portfolio",
+    "assignCopilot": true
+  },
+
+  "routes": [
+    {
+      "path": "/",
+      "type": "page",
+      "file": "app/page.tsx",
+      "serverComponent": true,
+      "description": "Main portfolio page with all sections"
+    },
+    {
+      "path": "/api/cv/download",
+      "type": "route-handler",
+      "file": "app/api/cv/download/route.ts",
+      "methods": ["GET"],
+      "description": "Download CV PDF and track analytics"
+    },
+    {
+      "path": "/api/analytics/pageview",
+      "type": "route-handler",
+      "file": "app/api/analytics/pageview/route.ts",
+      "methods": ["POST"],
+      "description": "Track page view for analytics"
+    },
+    {
+      "path": "/api/analytics/stats",
+      "type": "route-handler",
+      "file": "app/api/analytics/stats/route.ts",
+      "methods": ["GET"],
+      "description": "Get analytics statistics"
+    }
+  ],
+
+  "database": {
+    "provider": "PostgreSQL",
+    "orm": "Drizzle",
+    "migrations": "drizzle-kit",
+    "schema": {
+      "tables": ["cv_downloads", "page_views"],
+      "relations": []
+    },
+    "indexes": [
+      "idx_cv_downloads_downloaded_at",
+      "idx_cv_downloads_country",
+      "idx_page_views_viewed_at",
+      "idx_page_views_page_path",
+      "idx_page_views_session_id"
+    ]
+  },
+
+  "aws": {
+    "services": []
+  },
+
+  "artifacts": {
+    "ir": {
+      "summary": "./irVisual/summary.md",
+      "wireframe": "./irVisual/wireframe.txt",
+      "componentTree": "./irVisual/component-tree.txt",
+      "dataFixtures": "./irVisual/data-fixtures.json",
+      "bindingMap": "./irVisual/binding-map.txt",
+      "responsive": "./irVisual/responsive.md"
+    },
+    "screenshots": null
+  },
+
+  "responsive": {
+    "approach": "Mobile-first with Tailwind",
+    "breakpoints": {
+      "sm": { "minWidth": 640 },
+      "md": { "minWidth": 768 },
+      "lg": { "minWidth": 1024 },
+      "xl": { "minWidth": 1280 },
+      "2xl": { "minWidth": 1536 }
+    },
+    "visibilityMap": [
+      { "component": "matrix-rain", "mobile": "hidden", "tablet": "partial", "desktop": "full" },
+      { "component": "horizontal-nav", "mobile": "hidden", "tablet": "hidden", "desktop": "visible" },
+      { "component": "hamburger-menu", "mobile": "visible", "tablet": "visible", "desktop": "hidden" },
+      { "component": "skill-grid", "mobile": "1-col", "tablet": "2-col", "desktop": "4-col" }
+    ]
+  },
+
+  "implementation": {
+    "phases": [
+      {
+        "name": "Project Setup",
+        "order": 1,
+        "tasks": [
+          "CREATE Next.js 14+ project with TypeScript",
+          "INSTALL shadcn/ui CLI and components",
+          "CONFIGURE Tailwind with Matrix theme",
+          "SETUP Drizzle ORM with PostgreSQL",
+          "CREATE environment variables (.env.local)",
+          "COPY CV PDF to /public directory"
+        ],
+        "dependencies": [],
+        "deliverable": "Next.js project initialized with all tools"
+      },
+      {
+        "name": "Database Setup",
+        "order": 2,
+        "tasks": [
+          "CREATE Drizzle schema (lib/schema.ts)",
+          "DEFINE cv_downloads table",
+          "DEFINE page_views table",
+          "GENERATE migrations (drizzle-kit)",
+          "RUN migrations",
+          "SEED database (optional, for testing)"
+        ],
+        "dependencies": ["Project Setup"],
+        "deliverable": "Database schema and migrations ready"
+      },
+      {
+        "name": "Layout & Theme",
+        "order": 3,
+        "tasks": [
+          "CREATE app/layout.tsx with metadata",
+          "CONFIGURE fonts (JetBrains Mono, Fira Code)",
+          "CREATE global CSS with Matrix theme",
+          "ADD Matrix rain background component",
+          "ADD scan lines overlay component",
+          "SETUP dark theme (black/green colors)"
+        ],
+        "dependencies": ["Project Setup"],
+        "deliverable": "Layout and theme configured"
+      },
+      {
+        "name": "Server Components (Static Content)",
+        "order": 4,
+        "tasks": [
+          "CREATE lib/data.ts with CV data",
+          "CREATE AboutSection component",
+          "CREATE Footer component",
+          "CREATE TerminalCommand component",
+          "CREATE TerminalPrompt component"
+        ],
+        "dependencies": ["Layout & Theme"],
+        "deliverable": "Static server-rendered sections"
+      },
+      {
+        "name": "Client Components (Interactive)",
+        "order": 5,
+        "tasks": [
+          "CREATE Header with navigation",
+          "CREATE HeroSection with typing animation",
+          "CREATE SkillsSection with progress bars",
+          "CREATE WorkHistorySection with expandable timeline",
+          "CREATE ContactSection with copy-to-clipboard",
+          "CREATE DownloadCVButton with analytics"
+        ],
+        "dependencies": ["Server Components (Static Content)"],
+        "deliverable": "Interactive client components"
+      },
+      {
+        "name": "Effects & Animations",
+        "order": 6,
+        "tasks": [
+          "CREATE MatrixRain canvas component",
+          "CREATE GlitchText CSS animation",
+          "CREATE TypingAnimation component",
+          "CREATE ScanLines overlay",
+          "CREATE FadeIn scroll animation",
+          "ADD reduced motion support"
+        ],
+        "dependencies": ["Client Components (Interactive)"],
+        "deliverable": "Visual effects and animations"
+      },
+      {
+        "name": "Server Actions & Analytics",
+        "order": 7,
+        "tasks": [
+          "CREATE lib/actions.ts with Server Actions",
+          "IMPLEMENT trackCVDownload action",
+          "IMPLEMENT trackPageView action",
+          "IMPLEMENT getAnalyticsStats action",
+          "CREATE API route /api/cv/download",
+          "CREATE API route /api/analytics/pageview",
+          "CREATE API route /api/analytics/stats"
+        ],
+        "dependencies": ["Database Setup", "Client Components (Interactive)"],
+        "deliverable": "Analytics tracking functional"
+      },
+      {
+        "name": "Responsive & Polish",
+        "order": 8,
+        "tasks": [
+          "IMPLEMENT mobile-first Tailwind styles",
+          "ADD Sheet component for mobile menu",
+          "TEST responsive breakpoints (mobile, tablet, desktop)",
+          "OPTIMIZE animations for mobile (disable Matrix rain)",
+          "ADD loading states (Skeleton)",
+          "TEST cross-browser compatibility"
+        ],
+        "dependencies": ["Effects & Animations"],
+        "deliverable": "Fully responsive UI"
+      },
+      {
+        "name": "Testing",
+        "order": 9,
+        "tasks": [
+          "WRITE unit tests for Server Actions (Vitest)",
+          "WRITE component tests for interactive elements",
+          "WRITE e2e tests for critical paths (Playwright)",
+          "RUN accessibility audit (axe, Lighthouse)",
+          "VERIFY Lighthouse scores (>90)",
+          "TEST keyboard navigation"
+        ],
+        "dependencies": ["Responsive & Polish"],
+        "deliverable": "Comprehensive test coverage"
+      },
+      {
+        "name": "Deployment",
+        "order": 10,
+        "tasks": [
+          "DEPLOY to Vercel (connect GitHub repo)",
+          "CONFIGURE custom domain (if available)",
+          "SETUP environment variables in Vercel",
+          "TEST production build",
+          "MONITOR analytics (CV downloads, page views)",
+          "SETUP error monitoring (Sentry or Vercel)"
+        ],
+        "dependencies": ["Testing"],
+        "deliverable": "Live production website"
+      }
+    ],
+
+    "risks": [
+      {
+        "risk": "Matrix rain animation causes performance issues on mobile",
+        "likelihood": "Medium",
+        "impact": "Medium",
+        "mitigation": "Disable on mobile, reduce frame rate on tablet, add performance monitoring"
+      },
+      {
+        "risk": "Glitch effects trigger motion sickness",
+        "likelihood": "Low",
+        "impact": "Medium",
+        "mitigation": "Respect prefers-reduced-motion, provide toggle option, reduce intensity"
+      },
+      {
+        "risk": "Database connection failures affect analytics",
+        "likelihood": "Low",
+        "impact": "Low",
+        "mitigation": "Graceful degradation, client-side fallback, queue failed requests"
+      }
+    ],
+
+    "codebasePatterns": {
+      "pages": "app/page.tsx (Server Component by default)",
+      "clientComponents": "components/ with 'use client' directive",
+      "serverActions": "lib/actions.ts",
+      "schema": "lib/schema.ts (Drizzle)",
+      "database": "lib/db.ts (Drizzle client)",
+      "utilities": "lib/utils.ts",
+      "data": "lib/data.ts (static CV data)",
+      "shadcnComponents": "components/ui/ (generated by shadcn CLI)",
+      "effects": "components/effects/ (custom animations)",
+      "tests": "__tests__/ or *.test.ts colocated"
+    },
+
+    "knownGotchas": [
+      {
+        "library": "Next.js App Router",
+        "gotcha": "Server Components can't use hooks (useState, useEffect, etc.)",
+        "impact": "Must use 'use client' directive for interactive components"
+      },
+      {
+        "library": "Server Actions",
+        "gotcha": "Must use 'use server' directive and can only accept serializable data",
+        "impact": "Can't pass functions or class instances to Server Actions"
+      },
+      {
+        "library": "Canvas API",
+        "gotcha": "Canvas operations must run in Client Component with useEffect",
+        "impact": "Matrix rain must be client component with proper cleanup"
+      },
+      {
+        "library": "Vercel",
+        "gotcha": "Serverless functions have 10s timeout (Hobby), 60s (Pro)",
+        "impact": "Analytics should be async and not block render"
+      }
+    ]
+  },
+
+  "testing": {
+    "unit": {
+      "framework": "Vitest",
+      "coverage_target": ">80%",
+      "focus": [
+        "Server Actions (trackCVDownload, trackPageView, getAnalyticsStats)",
+        "Helper functions (formatDate, cn, getIPAddress)",
+        "Type guards and validators"
+      ]
+    },
+
+    "component": {
+      "framework": "Vitest + Testing Library",
+      "focus": [
+        "Client Components render correctly",
+        "User interactions trigger correct actions",
+        "Animations work (or disabled with reduced motion)",
+        "Error states display properly"
+      ]
+    },
+
+    "integration": {
+      "framework": "Playwright",
+      "scenarios": [
+        {
+          "name": "CV download flow",
+          "steps": [
+            "Navigate to /",
+            "Click 'Download CV' button",
+            "Verify PDF download",
+            "Verify analytics tracked"
+          ]
+        },
+        {
+          "name": "Navigation flow",
+          "steps": [
+            "Navigate to /",
+            "Click nav link (About)",
+            "Verify smooth scroll to section",
+            "Repeat for all sections"
+          ]
+        },
+        {
+          "name": "Mobile menu flow",
+          "steps": [
+            "Set viewport to mobile (375px)",
+            "Click hamburger menu",
+            "Verify Sheet opens",
+            "Click nav link",
+            "Verify Sheet closes and scrolls"
+          ]
+        }
+      ]
+    },
+
+    "accessibility": {
+      "standard": "WCAG 2.1 Level AA",
+      "tools": ["axe-core", "Lighthouse", "WAVE"],
+      "requirements": [
+        "Keyboard navigation for all actions",
+        "ARIA labels for dynamic content",
+        "Focus management for Sheet menu",
+        "Color contrast ratios ≥4.5:1",
+        "Touch targets ≥44×44px",
+        "Reduced motion support"
+      ]
+    },
+
+    "performance": {
+      "framework": "Lighthouse",
+      "targets": {
+        "Performance": ">90",
+        "Accessibility": "100",
+        "Best Practices": ">90",
+        "SEO": ">90"
+      },
+      "metrics": {
+        "FCP": "<1.8s",
+        "LCP": "<2.5s",
+        "TBT": "<200ms",
+        "CLS": "<0.1"
+      }
+    }
+  },
+
+  "qa": {
+    "checklist": [
+      {
+        "category": "Functionality",
+        "items": [
+          "Hero section displays with typing animation",
+          "All sections scroll smoothly",
+          "Navigation links work (desktop and mobile)",
+          "CV downloads correctly",
+          "Copy-to-clipboard works for all contact fields",
+          "Analytics tracking works (CV downloads, page views)",
+          "Timeline nodes expand/collapse",
+          "Skill progress bars animate on hover"
+        ]
+      },
+      {
+        "category": "Design",
+        "items": [
+          "Matrix rain animation works (desktop)",
+          "Glitch effects visible on text",
+          "Terminal aesthetic consistent throughout",
+          "Green-on-black color scheme correct",
+          "Monospace fonts (JetBrains Mono) loaded",
+          "Glow effects on buttons and borders",
+          "Scan lines overlay visible"
+        ]
+      },
+      {
+        "category": "Responsive",
+        "items": [
+          "Mobile layout (<640px) displays correctly",
+          "Tablet layout (640px-1024px) displays correctly",
+          "Desktop layout (1024px+) displays correctly",
+          "Sheet menu works on mobile/tablet",
+          "Horizontal nav works on desktop",
+          "Skill grid: 1 col (mobile), 2 col (tablet), 4 col (desktop)",
+          "Touch targets ≥44×44px on mobile"
+        ]
+      },
+      {
+        "category": "Accessibility",
+        "items": [
+          "Keyboard navigation works",
+          "Screen reader announces content",
+          "Focus indicators visible",
+          "Color contrast meets WCAG AA",
+          "ARIA labels present",
+          "Reduced motion preference respected",
+          "Skip to content link works"
+        ]
+      },
+      {
+        "category": "Performance",
+        "items": [
+          "Lighthouse score >90",
+          "LCP <2.5s",
+          "Matrix rain disabled on mobile",
+          "No console errors/warnings",
+          "Images optimized (N/A for this project)",
+          "Server Components used where possible"
+        ]
+      },
+      {
+        "category": "Database",
+        "items": [
+          "Migrations run successfully",
+          "Indexes created",
+          "CV downloads tracked correctly",
+          "Page views tracked correctly",
+          "Connection pooling configured"
+        ]
+      },
+      {
+        "category": "Cross-browser",
+        "items": [
+          "Chrome/Edge (latest)",
+          "Firefox (latest)",
+          "Safari (latest)",
+          "Mobile Safari (iOS 15+)",
+          "Chrome Mobile (Android 11+)"
+        ]
+      }
+    ]
+  },
+
+  "deployment": {
+    "platform": "Vercel",
+    "strategy": "Direct deployment (no feature flags needed for portfolio)",
+
+    "environments": [
+      {
+        "name": "Development",
+        "url": "http://localhost:3000",
+        "database": "Local PostgreSQL or Vercel Postgres (dev)",
+        "features": "All enabled"
+      },
+      {
+        "name": "Preview",
+        "url": "https://{branch}-{project}.vercel.app",
+        "database": "Vercel Postgres (preview)",
+        "features": "All enabled",
+        "trigger": "Pull request"
+      },
+      {
+        "name": "Production",
+        "url": "https://dancastrillo.com (or Vercel default)",
+        "database": "Vercel Postgres (production)",
+        "features": "All enabled"
+      }
+    ],
+
+    "featureFlag": null,
+
+    "monitoring": {
+      "platform": "Vercel Analytics + Custom analytics table",
+      "metrics": [
+        "CV download rate (downloads / page views)",
+        "Page load time (p95 <2s)",
+        "Error rate (<1%)",
+        "Time on site (avg >2 minutes)"
+      ],
+      "alerts": [
+        {
+          "metric": "Error rate",
+          "threshold": ">5%",
+          "action": "Slack notification"
+        },
+        {
+          "metric": "Page load time (p95)",
+          "threshold": ">5s",
+          "action": "Investigate performance"
+        }
+      ]
+    },
+
+    "rollback": {
+      "trigger": "Critical bug or >5% error rate",
+      "steps": [
+        "Revert to previous Vercel deployment",
+        "Monitor metrics for 30 minutes",
+        "Notify owner",
+        "Create incident post-mortem"
+      ]
+    }
+  },
+
+  "copilot": {
+    "enabled": true,
+    "assignToIssue": true,
+    "customInstructions": "Implement this hacker/Matrix-themed personal portfolio following the spec.json and Visual IR artifacts. Use Next.js 14+ App Router with Server Components by default. Add 'use client' only for interactive components (animations, canvas, user interactions). Use shadcn/ui components (don't build custom). Implement Server Actions for analytics tracking. Follow the binding-map.txt exactly. Implement responsive design with mobile-first Tailwind. Disable Matrix rain on mobile for performance. Add comprehensive tests. Follow the implementation phases in order. Respect prefers-reduced-motion for accessibility.",
+    "baseRef": "main",
+    "contextFiles": [
+      "ui-specs/hacker-portfolio/spec.json",
+      "ui-specs/hacker-portfolio/irVisual/wireframe.txt",
+      "ui-specs/hacker-portfolio/irVisual/data-fixtures.json",
+      "ui-specs/hacker-portfolio/irVisual/component-tree.txt",
+      "ui-specs/hacker-portfolio/irVisual/binding-map.txt",
+      "ui-specs/hacker-portfolio/irVisual/responsive.md",
+      "ui-specs/hacker-portfolio/irVisual/summary.md"
+    ],
+    "expectedDeliverables": {
+      "pages": "app/page.tsx, app/layout.tsx",
+      "components": "All components from component-tree.txt",
+      "effects": "MatrixRain, GlitchText, TypingAnimation, ScanLines, FadeIn",
+      "actions": "lib/actions.ts with Server Actions",
+      "schema": "lib/schema.ts with Drizzle schema",
+      "api": "API routes for CV download and analytics",
+      "data": "lib/data.ts with CV content",
+      "tests": "Unit tests + e2e tests (>80% coverage)",
+      "migrations": "drizzle/ with migration files",
+      "assets": "public/dan_castrillo_cv.pdf"
+    }
+  },
+
+  "notes": [
+    {
+      "timestamp": "2026-01-28T18:06:00Z",
+      "content": "Initial specification generated from CV content and user requirements for hacker/Matrix aesthetic",
+      "author": "ui-spec-agent"
+    },
+    {
+      "timestamp": "2026-01-28T18:06:00Z",
+      "content": "This is a greenfield project - no existing codebase. Will need to initialize Next.js from scratch.",
+      "author": "codebase-analysis-agent"
+    },
+    {
+      "timestamp": "2026-01-28T18:06:00Z",
+      "content": "CV content extracted from ~/Documents/dan_castrillo_cv.typ - includes 10 years experience, 6 companies, multiple skills",
+      "author": "content-extraction"
+    }
+  ]
+}
