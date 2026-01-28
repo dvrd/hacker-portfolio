@@ -21,29 +21,34 @@ export function ContactSection() {
   }
 
   return (
-    <section id="contact" className="py-20 bg-black">
-      <div className="container mx-auto px-4">
+    <section id="contact" className="py-24 md:py-32 bg-black">
+      <div className="container mx-auto px-4 md:px-6 lg:px-8 max-w-7xl">
         <FadeIn>
-          <GlitchText
-            text="// CONTACT"
-            as="h2"
-            className="text-3xl md:text-4xl font-bold mb-12 text-green-400"
-          />
+          <div className="max-w-3xl mb-16 md:mb-20">
+            <GlitchText
+              text="// CONTACT"
+              as="h2"
+              className="text-3xl md:text-5xl font-bold mb-4 text-green-400"
+            />
+            <p className="text-green-500/70 text-lg md:text-xl font-mono">
+              Let's build something together
+            </p>
+          </div>
         </FadeIn>
 
         <FadeIn delay={200}>
-          <div className="max-w-2xl mx-auto">
+          <div className="max-w-3xl mx-auto">
             <Card>
               <CardHeader>
-                <CardTitle className="flex items-center gap-2">
+                <CardTitle className="flex items-center gap-2 text-xl md:text-2xl">
                   <span className="text-green-500">&gt;</span>
                   Get In Touch
                 </CardTitle>
-                <CardDescription>
+                <CardDescription className="text-base">
                   Click any field to copy to clipboard
                 </CardDescription>
               </CardHeader>
-              <CardContent className="space-y-4">
+              <CardContent className="space-y-5">
                 <ContactItem
                   label="EMAIL"
                   value={profile.contact.email}
@@ -91,20 +96,20 @@ interface ContactItemProps {
 
 function ContactItem({ label, value, copied, onCopy, href }: ContactItemProps) {
   return (
-    <div className="flex items-center justify-between gap-4 p-3 rounded border border-green-500/20 hover:border-green-500/40 transition-colors">
-      <div className="flex items-center gap-3 flex-1 min-w-0">
-        <span className="text-green-400 font-mono text-sm shrink-0">{label}:</span>
+    <div className="flex items-center justify-between gap-4 p-4 md:p-5 rounded-lg border border-green-500/20 hover:border-green-500/40 transition-all hover:shadow-lg hover:shadow-green-500/10">
+      <div className="flex items-center gap-4 flex-1 min-w-0">
+        <span className="text-green-400 font-mono text-sm md:text-base shrink-0 font-semibold">{label}:</span>
         {href ? (
           <a
             href={href}
             target="_blank"
             rel="noopener noreferrer"
-            className="text-green-500 hover:text-green-400 transition-colors font-mono text-sm truncate"
+            className="text-green-500 hover:text-green-400 transition-colors font-mono text-sm md:text-base truncate"
           >
             {value}
           </a>
         ) : (
-          <span className="text-green-500 font-mono text-sm truncate">{value}</span>
+          <span className="text-green-500 font-mono text-sm md:text-base truncate">{value}</span>
         )}
       </div>
       <Button

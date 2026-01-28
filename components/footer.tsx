@@ -4,33 +4,33 @@ export function Footer() {
   const currentYear = new Date().getFullYear()
 
   return (
-    <footer className="bg-black border-t border-green-500/20 py-8">
-      <div className="container mx-auto px-4">
-        <div className="flex flex-col md:flex-row justify-between items-center gap-4">
-          <div className="text-green-500/70 text-sm font-mono">
+    <footer className="bg-black border-t border-green-500/20 py-12 md:py-16">
+      <div className="container mx-auto px-4 md:px-6 lg:px-8 max-w-7xl">
+        <div className="flex flex-col md:flex-row justify-between items-center gap-6 md:gap-8">
+          <div className="text-green-500/70 text-sm md:text-base font-mono">
             © {currentYear} {profile.name}. All rights reserved.
           </div>
 
-          <div className="flex gap-6">
+          <div className="flex gap-8">
             <a
               href={`https://${profile.contact.github}`}
               target="_blank"
               rel="noopener noreferrer"
-              className="text-green-500 hover:text-green-400 transition-colors text-sm font-mono"
+              className="text-green-500 hover:text-green-400 transition-colors text-sm md:text-base font-mono hover:underline underline-offset-4"
             >
               [GITHUB]
             </a>
             <a
               href={`mailto:${profile.contact.email}`}
-              className="text-green-500 hover:text-green-400 transition-colors text-sm font-mono"
+              className="text-green-500 hover:text-green-400 transition-colors text-sm md:text-base font-mono hover:underline underline-offset-4"
             >
               [EMAIL]
             </a>
           </div>
         </div>
 
-        <div className="mt-4 text-center text-xs text-green-500/50 font-mono">
-          &gt; Built with Next.js 14+ • Styled with Tailwind CSS v4 • Powered by Matrix_
+        <div className="mt-8 text-center text-xs md:text-sm text-green-500/50 font-mono">
+          &gt; Built with Next.js 15+ • Styled with Tailwind CSS v4 • Powered by Matrix_
         </div>
       </div>
     </footer>
